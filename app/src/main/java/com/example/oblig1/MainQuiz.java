@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 public class MainQuiz extends AppCompatActivity {
     int questionNumber = 0;
+    int score = 0;
     ImageView quizImage;
     Button answerQuiz;
     EditText userAnswer;
@@ -59,6 +60,7 @@ public class MainQuiz extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         //recyclerView.setAdapter();
+        questionNumberTextView.setText(getString(R.string.score, String.valueOf(score), String.valueOf(quizItems.size())));
     }
 
     public void answerQuiz(View view) {
@@ -66,6 +68,9 @@ public class MainQuiz extends AppCompatActivity {
         if (answer.equals("")) {
             Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
             return;
+        }
+        if(answer.toUpperCase().equals(quizItems.get(questionNumber).getCorrectAnswer().toUpperCase())){
+            score++;
         }
         result.put(quizItems.get(questionNumber), answer);
         userAnswer.setText("");
@@ -75,7 +80,7 @@ public class MainQuiz extends AppCompatActivity {
 
     private void setQuestionNumberTextView(){
         String qN = String.valueOf(questionNumber+1);
-        questionNumberTextView.setText(qN);
+        questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(quizItems.size())));
     }
 
     //Adds quizItems to array

@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_bottom">
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/userAnswerTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_green_light" />
+        tools:text="jfljBFjfbh"/>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="2"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:src="@mipmap/ic_launcher_round"
             android:id="@+id/imageView"/>
 
         <TextView
             android:id="@+id/correctAnswerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="Petter"
             android:textColor="@android:color/holo_green_light" />
 
     </LinearLayout>

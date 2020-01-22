@@ -3,4 +3,6 @@
     <string name="quiz_image">Quiz image</string>
     <string name="name_of_person_in_image">Name of person in image</string>
     <string name="answer">Answer</string>
+    <string name="quizQuestion">Question %1$s / %2$s</string>
+    <string name="score">Score: %1$s / %2$s</string>
 </resources>
