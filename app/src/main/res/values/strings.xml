@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Oblig1</string>
+    <string name="quiz_image">Quiz image</string>
+    <string name="name_of_person_in_image">Name of person in image</string>
+    <string name="answer">Answer</string>
 </resources>
