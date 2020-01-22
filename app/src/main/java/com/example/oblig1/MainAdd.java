@@ -25,7 +25,9 @@ public class MainAdd extends AppCompatActivity {
     }
     public void addNew(View v){
         EditText txt = findViewById(R.id.editText);
-        append(txt.getText().toString());
+        String nametoAdd = txt.getText().toString();
+        append(nametoAdd);
+        navn.add(nametoAdd);
         txt.setText("");
     }
     private void append(String s){
