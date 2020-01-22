@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class ImageHandler {
@@ -47,5 +48,15 @@ public class ImageHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static String randomString() {
+        Random generator = new Random();
+        StringBuilder randomStringBuilder = new StringBuilder();
+        char tempChar;
+        for (int i = 0; i < 10; i++) {
+            tempChar = (char) (generator.nextInt('z' - 'a') + 'a');
+            randomStringBuilder.append(tempChar);
+        }
+        return randomStringBuilder.toString()+"_";
     }
 }
