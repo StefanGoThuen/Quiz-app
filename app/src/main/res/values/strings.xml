@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Oblig1</string>
+    <string-array name="navn">
+        <item>Ole</item>
+        <item>Petter</item>
+        <item>Stefan</item>
+        <item>Simen</item>
+    </string-array>
 </resources>

@@ -5,16 +5,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainAdd extends AppCompatActivity {
-    TextView textView;
+    private ArrayList<String> navn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        String string = getIntent().getExtras().getString(MainActivity.MYSTRING);
-        if (string != null) {
-            textView.setText(string);
-        }
+        navn = getIntent().getStringArrayListExtra("navn");
     }
 }
