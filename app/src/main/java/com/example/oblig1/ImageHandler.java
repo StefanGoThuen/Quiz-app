@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class ImageHandler {
     private static final String JPG = ".jpg";
 
+
     public static HashMap<Bitmap, String> retrieveImageWithName(Context context, ArrayList<String> filenames) {
         HashMap<Bitmap, String> map = new HashMap<>();
         for (String name : filenames) {
