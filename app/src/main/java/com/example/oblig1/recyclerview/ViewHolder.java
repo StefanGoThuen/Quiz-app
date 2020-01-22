@@ -1,4 +1,12 @@
 package com.example.oblig1.recyclerview;
 
-public class ViewHolder {
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+class ViewHolder extends RecyclerView.ViewHolder {
+    ViewHolder(@NonNull View itemView) {
+        super(itemView);
+    }
 }
