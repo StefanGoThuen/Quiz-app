@@ -22,7 +22,7 @@ public class ImageHandler {
         for (String name : filenames) {
             File imgFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + name);
             if (imgFile.exists()) {
-                map.put(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), name.split(".")[0]);
+                map.put(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), name.split("_")[1].split(".")[0]);
             }
         }
         return map;
