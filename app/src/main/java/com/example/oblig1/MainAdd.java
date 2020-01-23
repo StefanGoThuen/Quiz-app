@@ -18,8 +18,9 @@ import java.util.Map;
 public class MainAdd extends AppCompatActivity {
     private TextView view;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    ImageView imageView;
-    SharedPreferences pref;
+    private Bitmap imageBitmap;
+    private ImageView imageView;
+    private SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +31,24 @@ public class MainAdd extends AppCompatActivity {
         showNames(view);
 
     }
+
     public void addNew(View v){
         EditText txt = findViewById(R.id.editText);
         String nametoAdd = txt.getText().toString();
+        if(nametoAdd.equals("") || imageBitmap == null){
+            return;
+        }
         append(nametoAdd);
+        nametoAdd = ImageHandler.randomString() + "_" + nametoAdd;
         txt.setText("");
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(nametoAdd, nametoAdd);
         editor.commit();
+
+        //Saves the image
+
+        ImageHandler.saveBitmapToFile(this, ImageHandler.randomString() + nametoAdd, imageBitmap);
+        imageView.setImageBitmap(null);
     }
     private void append(String s){
         view.append(s + "\n");
@@ -59,7 +70,7 @@ public class MainAdd extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
 
             imageView.setImageBitmap(imageBitmap);
         }
