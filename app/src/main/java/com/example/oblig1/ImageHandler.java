@@ -17,12 +17,12 @@ public class ImageHandler {
     private static final String JPG = ".jpg";
 
 
-    public static HashMap<Bitmap, String> retrieveImageWithName(Context context, ArrayList<String> filenames) {
-        HashMap<Bitmap, String> map = new HashMap<>();
+    public static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
+        HashMap<String, Bitmap> map = new HashMap<>();
         for (String name : filenames) {
             File imgFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + name);
             if (imgFile.exists()) {
-                map.put(BitmapFactory.decodeFile(imgFile.getAbsolutePath()), name.split("_")[1].split(".")[0]);
+                map.put(name.split("_")[1].split(".")[0], BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
             }
         }
         return map;
