@@ -20,8 +20,9 @@ public class ImageHandler {
     public static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
         HashMap<String, Bitmap> map = new HashMap<>();
         for (String name : filenames) {
-            File imgFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + name);
+            File imgFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + name + JPG);
             if (imgFile.exists()) {
+
                 map.put(name.split("_")[1].split(".")[0], BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
             }
         }

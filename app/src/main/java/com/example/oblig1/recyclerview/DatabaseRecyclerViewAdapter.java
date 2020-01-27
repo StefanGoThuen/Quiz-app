@@ -32,9 +32,9 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DatabaseItem item = items.get(position);
         ImageView imageView = holder.itemView.findViewById(R.id.dataImage);
-        imageView.setImageDrawable(item.getImage());
+        imageView.setImageBitmap(item.getImage());
         TextView textView = holder.itemView.findViewById(R.id.dataText);
-        textView.setText(item.getName());
+        textView.setText(item.getName().split("_")[1]);
     }
 
     @Override
