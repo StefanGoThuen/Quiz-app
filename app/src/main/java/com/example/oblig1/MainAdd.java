@@ -47,7 +47,7 @@ public class MainAdd extends AppCompatActivity {
 
         //Saves the image
 
-        ImageHandler.saveBitmapToFile(this, ImageHandler.randomString() + nametoAdd, imageBitmap);
+        ImageHandler.saveBitmapToFile(this, nametoAdd, imageBitmap);
         imageView.setImageBitmap(null);
     }
     private void append(String s){
