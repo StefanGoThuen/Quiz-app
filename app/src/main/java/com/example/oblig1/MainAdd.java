@@ -28,7 +28,7 @@ public class MainAdd extends AppCompatActivity {
         view = findViewById(R.id.textView);
         pref = getSharedPreferences("names", MODE_PRIVATE);
         imageView = findViewById(R.id.imageView);
-        showNames(view);
+        showNames();
 
     }
 
@@ -39,7 +39,7 @@ public class MainAdd extends AppCompatActivity {
             return;
         }
         append(nametoAdd);
-        nametoAdd = ImageHandler.randomString() + "_" + nametoAdd;
+        nametoAdd = ImageHandler.randomString() + nametoAdd;
         txt.setText("");
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(nametoAdd, nametoAdd);
@@ -53,11 +53,16 @@ public class MainAdd extends AppCompatActivity {
     private void append(String s){
         view.append(s + "\n");
     }
-    private void showNames(View v){
+    private void showNames(){
         Map names = pref.getAll();
         Object[] s = names.values().toArray();
         for(Object o : s){
-            view.append(o.toString() + "\n");
+            if(o.toString().contains("_")){
+                view.append(o.toString().split("_")[1] + "\n");
+            }else{
+                view.append(o.toString() + "\n");
+            }
+
         }
     }
     public void startPicture(View v){
