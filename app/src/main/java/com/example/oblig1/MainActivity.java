@@ -15,11 +15,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        pref = getSharedPreferences("names", MODE_PRIVATE);
-        int size = pref.getAll().size();
-        if(size == 0){
-            addNames();
-        }
+       // pref = getSharedPreferences("names", MODE_PRIVATE);
+      //  int size = pref.getAll().size();
+        //if(size == 0){
+       //     addNames();
+     //   }
     }
 
     public void onclickData(View view) {
