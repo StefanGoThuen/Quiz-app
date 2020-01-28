@@ -1,9 +1,11 @@
 package com.example.oblig1;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,7 +61,12 @@ public class MainData extends AppCompatActivity {
         Object[] strings = allprefs.values().toArray();
         HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(this, getArrayList(strings));
         for(Object s: strings){
-            dataItems.add(new DatabaseItem(s.toString(), map.get(s.toString())));
+            if(s.toString().contains("_")){
+                dataItems.add(new DatabaseItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1])));
+            }else{
+                dataItems.add(new DatabaseItem(s.toString(), map.get(s.toString())));
+            }
+
         }
     }
     private ArrayList<String> getArrayList(Object[] strings){
@@ -68,6 +75,14 @@ public class MainData extends AppCompatActivity {
             list.add(o.toString());
         }
         return list;
+    }
+    public void rmAll(View v){
+        SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+        Intent intent = new Intent(this, MainData.class);
+        startActivity(intent);
     }
 
 }

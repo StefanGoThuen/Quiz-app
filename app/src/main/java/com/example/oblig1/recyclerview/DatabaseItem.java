@@ -1,11 +1,12 @@
 package com.example.oblig1.recyclerview;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 public class DatabaseItem {
 
     private String name;
-    private Drawable image;
+    private Bitmap image;
 
     public String getName() {
         return name;
@@ -15,15 +16,15 @@ public class DatabaseItem {
         this.name = name;
     }
 
-    public Drawable getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
-    public DatabaseItem(String name, Drawable image){
+    public DatabaseItem(String name, Bitmap image){
         this.name = name;
         this.image = image;
     }
