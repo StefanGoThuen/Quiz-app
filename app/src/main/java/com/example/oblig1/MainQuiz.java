@@ -1,8 +1,5 @@
 package com.example.oblig1;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +16,8 @@ import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.recyclerview.QuizRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -28,6 +27,7 @@ public class MainQuiz extends AppCompatActivity {
     ImageView quizImage;
     Button answerQuiz;
     EditText userAnswer;
+    ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
     ArrayList<DatabaseItem> quizItems = new ArrayList<>();
     TextView questionNumberTextView;
     HashMap<DatabaseItem, String> result = new HashMap<>();
@@ -40,15 +40,16 @@ public class MainQuiz extends AppCompatActivity {
         quizImage = findViewById(R.id.quizImage);
         answerQuiz = findViewById(R.id.quizButton);
         userAnswer = findViewById(R.id.quizEditText);
-        DatabaseHandler.getQuizItems(this, quizItems);
+        DatabaseHandler.getQuizItems(this, databaseItems);
+        shuffleAndlimitQuizItems();
         setQuestionNumberTextView();
-        quizImage.setImageBitmap(quizItems.get(questionNumber).getImage());
+        quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
     }
     private void nextImage() {
-        if (questionNumber == quizItems.size()) {
+        if (questionNumber == databaseItems.size()) {
             endQuiz();
         } else {
-            quizImage.setImageBitmap(quizItems.get(questionNumber).getImage());
+            quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
         }
     }
 
@@ -56,13 +57,13 @@ public class MainQuiz extends AppCompatActivity {
         userAnswer.setVisibility(View.GONE);
         quizImage.setVisibility(View.GONE);
         answerQuiz.setVisibility(View.GONE);
-        QuizRecyclerViewAdapter adapter = new QuizRecyclerViewAdapter(quizItems, result);
+        QuizRecyclerViewAdapter adapter = new QuizRecyclerViewAdapter(databaseItems, result);
         RecyclerView recyclerView = findViewById(R.id.quizRecyclerView);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         //recyclerView.setAdapter();
-        questionNumberTextView.setText(getString(R.string.score, String.valueOf(score), String.valueOf(quizItems.size())));
+        questionNumberTextView.setText(getString(R.string.score, String.valueOf(score), String.valueOf(databaseItems.size())));
     }
 
     public void answerQuiz(View view) {
@@ -71,21 +72,32 @@ public class MainQuiz extends AppCompatActivity {
             Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(answer.toUpperCase().equals(quizItems.get(questionNumber).getName().toUpperCase())){
+        if(answer.toUpperCase().equals(databaseItems.get(questionNumber).getName().toUpperCase())){
             score++;
         }
-        result.put(quizItems.get(questionNumber), answer);
+        result.put(databaseItems.get(questionNumber), answer);
         userAnswer.setText("");
-        questionNumber++;
+        setQuestionNumberTextView();
         nextImage();
     }
 
     private void setQuestionNumberTextView(){
-        String qN = String.valueOf(questionNumber+1);
-        questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(quizItems.size())));
+        String qN = String.valueOf(questionNumber+=1);
+        questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(databaseItems.size())));
     }
 
-    //Adds quizItems to array
+    //Adds databaseItems to array
+
+    private void shuffleAndlimitQuizItems(){
+        Collections.shuffle(databaseItems);
+        if(databaseItems.size()>10){
+            for(int i = 0; i<10; i++){
+                quizItems.add(databaseItems.get(i));
+            }
+        } else{
+            quizItems.addAll(databaseItems);
+        }
+    }
 
 }
 
