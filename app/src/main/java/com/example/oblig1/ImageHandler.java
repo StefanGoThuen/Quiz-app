@@ -13,11 +13,11 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-public class ImageHandler {
+class ImageHandler {
     private static final String JPG = ".jpg";
 
 
-    public static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
+    static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
         HashMap<String, Bitmap> map = new HashMap<>();
         for (String name : filenames) {
             System.out.println(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) +"/" + name + JPG);
@@ -31,7 +31,7 @@ public class ImageHandler {
         return map;
     }
 
-    public static void saveBitmapToFile(Context context, String imageName, Bitmap bitmap) {
+    static void saveBitmapToFile(Context context, String imageName, Bitmap bitmap) {
         // Image should be stored locally
         String storagePath = Environment.DIRECTORY_PICTURES;
         File storageDir = context.getExternalFilesDir(storagePath);
@@ -52,7 +52,7 @@ public class ImageHandler {
             e.printStackTrace();
         }
     }
-    public static String randomString() {
+    static String randomString() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
         char tempChar;
