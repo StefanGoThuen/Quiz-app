@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class MainAdd extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class MainAdd extends AppCompatActivity {
         txt.setText("");
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(nametoAdd, nametoAdd);
-        editor.commit();
+        editor.apply();
 
         //Saves the image
 

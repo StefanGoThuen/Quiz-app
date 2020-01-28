@@ -2,6 +2,7 @@ package com.example.oblig1;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -87,7 +88,7 @@ public class MainQuiz extends AppCompatActivity {
 
     //Adds quizItems to array
     private void getQuizItems(){
-
+        BitmapFactory.decodeResource(getResources(), R.drawable.ole);
         SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
         Map allprefs = pref.getAll();
         Object[] strings = allprefs.values().toArray();
