@@ -21,7 +21,8 @@ public class ImageHandler {
         HashMap<String, Bitmap> map = new HashMap<>();
         for (String name : filenames) {
             System.out.println(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) +"/" + name + JPG);
-            File imgFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + name + JPG);
+            File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File imgFile = new File(storageDir + "/" + name + JPG + "/");
             if (imgFile.exists()) {
                 System.out.println(BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
                 map.put(name.split("_")[1], BitmapFactory.decodeFile(imgFile.getAbsolutePath()));

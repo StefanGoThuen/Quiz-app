@@ -4,10 +4,15 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dataRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/dataRecyclerView">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
+    <Button
+        android:id="@+id/rmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="rmAll"
+        android:text="Fjern alle" />
 
 </LinearLayout>

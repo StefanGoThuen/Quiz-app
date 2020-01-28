@@ -34,7 +34,7 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
         ImageView imageView = holder.itemView.findViewById(R.id.dataImage);
         imageView.setImageBitmap(item.getImage());
         TextView textView = holder.itemView.findViewById(R.id.dataText);
-        textView.setText(item.getName().split("_")[1]);
+        textView.setText(item.getName());
     }
 
     @Override
