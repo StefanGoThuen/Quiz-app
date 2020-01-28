@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.recyclerview.DatabaseRecyclerViewAdapter;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,8 +83,17 @@ public class MainData extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.commit();
+        rmPictures();
         Intent intent = new Intent(this, MainData.class);
         startActivity(intent);
+
+    }
+    private void rmPictures(){
+        File picDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File[] allPics = picDir.listFiles();
+        for(File pic : allPics){
+            pic.delete();
+        }
     }
 
 }
