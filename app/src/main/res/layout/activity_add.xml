@@ -17,31 +17,29 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:ems="10"
-        android:hint="Navn"
+        android:hint="@string/navn"
         android:inputType="textPersonName" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        />
 
     <ImageButton
         android:id="@+id/picBtn"
-        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:onClick="startPicture"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:onClick="addNew"
         android:text="Legg til" />
 </LinearLayout>

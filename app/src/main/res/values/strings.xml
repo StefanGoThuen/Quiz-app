@@ -5,6 +5,8 @@
     <string name="answer">Answer</string>
     <string name="quizQuestion">Question %1$s / %2$s</string>
     <string name="score">Score: %1$s / %2$s</string>
+    <string name="fjern_alle">Fjern alle</string>
+    <string name="navn">Navn</string>
 
     <string-array name="navn">
         <item>Ole</item>

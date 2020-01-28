@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,14 +14,13 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-class ImageHandler {
+public class ImageHandler {
     private static final String JPG = ".jpg";
 
 
     static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
         HashMap<String, Bitmap> map = new HashMap<>();
         for (String name : filenames) {
-            System.out.println(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) +"/" + name + JPG);
             File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File imgFile = new File(storageDir + "/" + name + JPG + "/");
             if (imgFile.exists()) {
@@ -62,4 +62,12 @@ class ImageHandler {
         }
         return randomStringBuilder.toString()+"_";
     }
+
+    public static boolean removeImageFromStorage(Context context, String name){
+        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        Log.i("imageremovestuff", "removeImageFromStorage: "+name);
+        File imgFile = new File(storageDir + "/" + name + JPG + "/");
+        return imgFile.delete();
+    }
+
 }

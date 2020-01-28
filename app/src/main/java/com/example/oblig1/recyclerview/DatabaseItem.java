@@ -9,6 +9,15 @@ public class DatabaseItem {
 
     private String name;
     private Bitmap image;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getName() {
         return name;
@@ -27,11 +36,12 @@ public class DatabaseItem {
         this.image = image;
     }
 
-    public DatabaseItem(String name, Bitmap image){
+    public DatabaseItem(String name, Bitmap image, String fileName){
         Matrix m = new Matrix();
         m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);
         Bitmap scaledImage = Bitmap.createBitmap(image, 0, 0,  image.getWidth(),  image.getHeight(), m, true);
         this.name = name;
         this.image = scaledImage;
+        this.fileName = fileName;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
 
@@ -13,20 +14,20 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DatabaseHandler {
+class DatabaseHandler {
 
 
     static void getQuizItems(Context context, ArrayList<DatabaseItem> quizItems){
-        BitmapFactory.decodeResource(context.getResources(), R.drawable.ole);
         SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
         Map allprefs = pref.getAll();
         Object[] strings = allprefs.values().toArray();
         HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(context, getArrayList(strings));
         for(Object s: strings){
             if(s.toString().contains("_")){
-                quizItems.add(new DatabaseItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1])));
+                Log.i("imageremovestuff", "getQuizItems: " + s.toString());
+                quizItems.add(new DatabaseItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1]), s.toString()));
             }else{
-                quizItems.add(new DatabaseItem(s.toString(), map.get(s.toString())));
+                quizItems.add(new DatabaseItem(s.toString(), map.get(s.toString()), s.toString()));
             }
         }
         addDefaultImages(quizItems, context);
@@ -50,11 +51,11 @@ public class DatabaseHandler {
                 R.drawable.simen);
         Bitmap i5 = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.stefan);
-        DatabaseItem db1 = new DatabaseItem("ole", i1);
-        DatabaseItem db2 = new DatabaseItem("jostein", i2);
-        DatabaseItem db3 = new DatabaseItem("petter", i3);
-        DatabaseItem db4 = new DatabaseItem("simen", i4);
-        DatabaseItem db5 = new DatabaseItem("stefan", i5);
+        DatabaseItem db1 = new DatabaseItem("ole", i1, "");
+        DatabaseItem db2 = new DatabaseItem("jostein", i2, "");
+        DatabaseItem db3 = new DatabaseItem("petter", i3, "");
+        DatabaseItem db4 = new DatabaseItem("simen", i4, "");
+        DatabaseItem db5 = new DatabaseItem("stefan", i5, "");
         quizItems.add(db1);
         quizItems.add(db2);
         quizItems.add(db3);

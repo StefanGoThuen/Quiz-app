@@ -6,13 +6,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        />
 
     <Button
         android:id="@+id/rmBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:onClick="rmAll"
-        android:text="Fjern alle" />
+        android:layout_weight="0.8"
+        android:text="@string/fjern_alle" />
 
 </LinearLayout>

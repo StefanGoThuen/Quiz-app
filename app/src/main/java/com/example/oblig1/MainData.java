@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,13 +37,13 @@ public class MainData extends AppCompatActivity {
         setContentView(R.layout.activity_data);
         dataImage = findViewById(R.id.dataImage);
         textImage = findViewById(R.id.dataText);
-        getDataItems();
+        DatabaseHandler.getQuizItems(this , dataItems);
         initializeRecyclerView();
     }
 
 
     private void initializeRecyclerView() {
-        DatabaseRecyclerViewAdapter adapter = new DatabaseRecyclerViewAdapter(dataItems);
+        DatabaseRecyclerViewAdapter adapter = new DatabaseRecyclerViewAdapter(dataItems, this);
         RecyclerView recyclerView = findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -57,27 +59,8 @@ public class MainData extends AppCompatActivity {
 
         //}
     //}
-    private void getDataItems(){
-        pref = getSharedPreferences("names", MODE_PRIVATE);
-        Map allprefs = pref.getAll();
-        Object[] strings = allprefs.values().toArray();
-        HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(this, getArrayList(strings));
-        for(Object s: strings){
-            if(s.toString().contains("_")){
-                dataItems.add(new DatabaseItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1])));
-            }else{
-                dataItems.add(new DatabaseItem(s.toString(), map.get(s.toString())));
-            }
 
-        }
-    }
-    private ArrayList<String> getArrayList(Object[] strings){
-        ArrayList<String> list = new ArrayList<String>();
-        for(Object o : strings){
-            list.add(o.toString());
-        }
-        return list;
-    }
+
     public void rmAll(View v){
         SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -94,6 +77,25 @@ public class MainData extends AppCompatActivity {
         for(File pic : allPics){
             pic.delete();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.mybutton) {
+            startActivity(new Intent(this, MainAdd.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
