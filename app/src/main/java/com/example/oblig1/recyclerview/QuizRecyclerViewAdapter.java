@@ -51,7 +51,7 @@ public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
             userAnswerTextView.setText(userAnswer);
         }
 
-        image.setImageDrawable(item.getImage());
+        image.setImageBitmap(item.getImage());
     }
 
     @Override

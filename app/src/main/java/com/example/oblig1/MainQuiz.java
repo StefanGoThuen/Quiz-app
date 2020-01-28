@@ -1,6 +1,7 @@
 package com.example.oblig1;
 
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.example.oblig1.recyclerview.QuizRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainQuiz extends AppCompatActivity {
@@ -40,13 +42,13 @@ public class MainQuiz extends AppCompatActivity {
         userAnswer = findViewById(R.id.quizEditText);
         getQuizItems();
         setQuestionNumberTextView();
-        quizImage.setImageDrawable(quizItems.get(questionNumber).getImage());
+        quizImage.setImageBitmap(quizItems.get(questionNumber).getImage());
     }
     private void nextImage() {
         if (questionNumber == quizItems.size()) {
             endQuiz();
         } else {
-            quizImage.setImageDrawable(quizItems.get(questionNumber).getImage());
+            quizImage.setImageBitmap(quizItems.get(questionNumber).getImage());
         }
     }
 
@@ -85,9 +87,26 @@ public class MainQuiz extends AppCompatActivity {
 
     //Adds quizItems to array
     private void getQuizItems(){
-        Drawable placeHolder = getResources().getDrawable(R.drawable.quizimagetest);
-        String name = "test";
-        QuizItem item = new QuizItem(name, placeHolder);
-        quizItems.add(item);
+
+        SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
+        Map allprefs = pref.getAll();
+        Object[] strings = allprefs.values().toArray();
+        HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(this, getArrayList(strings));
+        for(Object s: strings){
+            if(s.toString().contains("_")){
+                quizItems.add(new QuizItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1])));
+            }else{
+                quizItems.add(new QuizItem(s.toString(), map.get(s.toString())));
+            }
+
+        }
+    }
+    private ArrayList<String> getArrayList(Object[] strings){
+        ArrayList<String> list = new ArrayList<>();
+        for(Object o : strings){
+            list.add(o.toString());
+        }
+        return list;
     }
 }
+

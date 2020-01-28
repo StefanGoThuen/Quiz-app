@@ -1,10 +1,10 @@
 package com.example.oblig1.recyclerview;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 public class QuizItem {
     private String correctAnswer;
-    private Drawable image;
+    private Bitmap image;
 
     public String getCorrectAnswer() {
         return correctAnswer;
@@ -14,15 +14,15 @@ public class QuizItem {
         this.correctAnswer = correctAnswer;
     }
 
-    public Drawable getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
-    public QuizItem(String correctAnswer, Drawable image){
+    public QuizItem(String correctAnswer, Bitmap image){
         this.correctAnswer = correctAnswer;
         this.image = image;
     }
