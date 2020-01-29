@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Activity til Databasen
+ */
+
 public class MainData extends AppCompatActivity {
     ImageView dataImage;
     TextView textImage;
@@ -41,6 +45,9 @@ public class MainData extends AppCompatActivity {
         initializeRecyclerView();
     }
 
+    /**
+     * Henter ferdig definerte views fra DatabaseRecyclerViewAdapter
+      */
 
     private void initializeRecyclerView() {
         DatabaseRecyclerViewAdapter adapter = new DatabaseRecyclerViewAdapter(dataItems, this);
@@ -49,17 +56,11 @@ public class MainData extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    //Adds dataItems to array
-  //  private void getDataItems() {
-   //     Drawable placeHolder = getResources().getDrawable(R.drawable.quizimagetest);
-     //   String name = "test";
-       // DatabaseItem item = new DatabaseItem(name, placeHolder);
-        //for (int i = 0; i < 15; i++) {
-          //  dataItems.add(item);
 
-        //}
-    //}
 
+    /**
+     * Metoden for å oppdatere viewet
+     */
 
     public void rmAll(View v){
         SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
@@ -71,6 +72,11 @@ public class MainData extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    /**
+     * Slett alle bildene knapp
+     */
+
     private void rmPictures(){
         File picDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] allPics = picDir.listFiles();
@@ -81,9 +87,7 @@ public class MainData extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
-        // If you don't have res/menu, just create a directory named "menu" inside res
-        getMenuInflater().inflate(R.menu.mymenu, menu);
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml.
         return super.onCreateOptionsMenu(menu);
     }
 

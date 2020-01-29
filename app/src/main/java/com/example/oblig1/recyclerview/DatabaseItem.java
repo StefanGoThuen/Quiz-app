@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 
 import com.example.oblig1.ImageHandler;
 
+/**
+ * Klasse for getters og setter som blir hentet i RecyclerViewAdapter klassene
+ */
 public class DatabaseItem {
 
     private String name;

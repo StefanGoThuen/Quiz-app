@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.ArrayList;
+/**
+ * Startsiden for appen som inneholder kanpper til de forskjellige aktivitetene
+ */
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
@@ -15,11 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // pref = getSharedPreferences("names", MODE_PRIVATE);
-      //  int size = pref.getAll().size();
-        //if(size == 0){
-       //     addNames();
-     //   }
     }
 
     public void onclickData(View view) {
@@ -36,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainAdd.class);
         startActivity(intent);
     }
+
+    /**
+     * fremtidig prosjekt. IKKE i bruk ennå
+     */
     public void addNames(){
         SharedPreferences.Editor editor = pref.edit();
         String[] names = getResources().getStringArray(R.array.navn);

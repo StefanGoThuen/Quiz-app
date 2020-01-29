@@ -14,6 +14,10 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Klasse som henter bilder og navn allerede lagret i databasen
+ */
+
 class DatabaseHandler {
 
 
@@ -39,6 +43,11 @@ class DatabaseHandler {
         }
         return list;
     }
+
+    /**
+     * Metoden som legger til
+     * bildene som allerede er laget
+     */
 
     private static void addDefaultImages(ArrayList<DatabaseItem> quizItems, Context context){
         Bitmap i1 = BitmapFactory.decodeResource(context.getResources(),

@@ -15,6 +15,10 @@ import com.example.oblig1.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Denne klassen viser spørsmålene og sjekker svarene i Quiz
+ */
+
 public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private ArrayList<DatabaseItem> items;
@@ -24,7 +28,18 @@ public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.items = items;
         this.userAnswers = userAnswers;
     }
-
+    /**
+     * RecycleView sin ViewHolder for å representere de itemsene de henter i DatabaseItem
+     *
+     * @param parent
+     * View gruppen der items blir representert / lagt til.
+     *
+     * @param viewType
+     * typen til den nye Viewen
+     *
+     * @return
+     * Retunerer den nye view med itemsene (bilder og navn) i.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,6 +47,20 @@ public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         View cellForRow = layoutInflater.inflate(R.layout.quiz_item, parent, false);
         return new ViewHolder(cellForRow);
     }
+
+    /**
+     * RecycleView sin ViewHolder for å vise og gi items en posisjon
+     * i den nye viewet
+     *
+     * @param holder
+     *   ViewHolder som viser dataen/items der i den posisjonen de har blitt tildelt
+     *
+     * @param position
+     *      Posisjonen til dataen/items
+     *
+     *      Metoden sjekker også om brukeren sitt svar er riktig eller feil
+     *      og setter fargen i følge svaret
+     */
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {

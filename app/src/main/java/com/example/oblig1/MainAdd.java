@@ -19,6 +19,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 
+
+/**
+ * Activity til ADD
+ */
+
 public class MainAdd extends AppCompatActivity {
     private TextView view;
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -52,9 +57,6 @@ public class MainAdd extends AppCompatActivity {
             SharedPreferences.Editor editor = pref.edit();
             editor.putString(nametoAdd, nametoAdd);
             editor.apply();
-
-            //Saves the image
-
             ImageHandler.saveBitmapToFile(this, nametoAdd, imageBitmap);
             imageView.setImageBitmap(null);
         } else if(v.getId()==R.id.galleryButton){
@@ -68,7 +70,12 @@ public class MainAdd extends AppCompatActivity {
         view.append(s + "\n");
     }
 
-    private void showNames() {
+
+    /**
+     * henter ut navnet og gjemmer random string fra navnet hvis de har en.
+     */
+
+    private void showNames(){
         Map names = pref.getAll();
         Object[] s = names.values().toArray();
         for (Object o : s) {
@@ -81,12 +88,21 @@ public class MainAdd extends AppCompatActivity {
         }
     }
 
-    public void startPicture(View v) {
+
+    /**
+     * Metoden for knappen som starter kameraet for å ta et bilde
+     */
+
+    public void startPicture(View v){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
+    /**
+     * Metode som henter det nye bildet
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
