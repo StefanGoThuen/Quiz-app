@@ -37,7 +37,9 @@ public class DatabaseItem {
 
         this.image = image;
     }
-
+    /**
+     * setter størrelse på bildene
+     */
     public DatabaseItem(String name, Bitmap image, String fileName) {
         Bitmap scaledImage = ImageHandler.scaledImage(image);
         this.name = name;

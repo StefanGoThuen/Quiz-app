@@ -43,6 +43,11 @@ public class MainAdd extends AppCompatActivity {
 
     }
 
+    /**
+     * metoden for å gi navn til det nye bildet
+     *
+     */
+
     public void addNew(View v) {
         if (v.getId() == R.id.button) {
 
