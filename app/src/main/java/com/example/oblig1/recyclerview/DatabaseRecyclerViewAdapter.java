@@ -28,6 +28,19 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
         this.context = context;
     }
 
+    /**
+     * RecycleView sin ViewHolder for å representere de itemsene de henter i DatabaseItem
+     *
+     * @param parent
+     * View gruppen der items blir representert / lagt til.
+     *
+     * @param viewType
+     * typen til den nye Viewen
+     *
+     * @return
+     * Retunerer den nye view med itemsene (bilder og navn) i.
+     */
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +48,20 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
         View cellForRow = layoutInflater.inflate(R.layout.data_item, parent, false);
         return new ViewHolder(cellForRow);
     }
+
+    /**
+     * RecycleView sin ViewHolder for å vise og gi items en posisjon
+     * i den nye viewet
+     *
+     * @param holder
+     *   ViewHolder som viser dataen/items der i den posisjonen de har blitt tildelt
+     *
+     * @param position
+     *      Posisjonen til dataen/items
+     *
+     *      I tillegg er det en onClicklistener for å slette bilder i databasen
+     *      som ikke er default blider
+     */
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {

@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Aktiviteten til QUIZ
+ */
+
 
 public class MainQuiz extends AppCompatActivity {
     int questionNumber = 0;
@@ -44,6 +48,11 @@ public class MainQuiz extends AppCompatActivity {
         setQuestionNumberTextView();
         quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
     }
+
+    /**
+     * Metodene nedenfor er for sjekke svar, hente neste sprøsmål, vise framgang, osv..
+     */
+
     private void nextImage() {
         questionNumber++;
         if (questionNumber == databaseItems.size()) {

@@ -5,6 +5,9 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
+/**
+ * Klasse for getters og setter som blir hentet i RecyclerViewAdapter klassene
+ */
 public class DatabaseItem {
 
     private String name;
@@ -35,7 +38,9 @@ public class DatabaseItem {
 
         this.image = image;
     }
-
+    /**
+     * setter størrelse på bildene
+     */
     public DatabaseItem(String name, Bitmap image, String fileName){
         Matrix m = new Matrix();
         m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);

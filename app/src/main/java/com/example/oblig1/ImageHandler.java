@@ -13,10 +13,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Klasse som har kontroll over hvor bildene blir lagret og hvilket navn de har.
+ */
 
 public class ImageHandler {
     private static final String JPG = ".jpg";
 
+    /**
+     * Metode som henter filnavnene fra de lagrete bildene fra minne
+     */
 
     static HashMap<String, Bitmap> retrieveImageWithName(Context context, ArrayList<String> filenames) {
         HashMap<String, Bitmap> map = new HashMap<>();
@@ -30,6 +36,10 @@ public class ImageHandler {
         }
         return map;
     }
+
+    /**
+     * metode som lagrer de nye bildene som blir lagt til fra ADD i minne
+     */
 
     static void saveBitmapToFile(Context context, String imageName, Bitmap bitmap) {
         // Image should be stored locally
@@ -52,6 +62,10 @@ public class ImageHandler {
             e.printStackTrace();
         }
     }
+    /**
+     * randomString klasse som legger til en random string til navnet på bilde
+     * i tilfelle det blir lagret flere bilder med samme navn
+     */
     static String randomString() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
@@ -62,6 +76,10 @@ public class ImageHandler {
         }
         return randomStringBuilder.toString()+"_";
     }
+
+    /**
+     * Sletter bilde helt fra minnet
+     */
 
     public static boolean removeImageFromStorage(Context context, String name){
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);

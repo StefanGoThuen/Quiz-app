@@ -14,6 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
+
+/**
+ * Activity til ADD
+ */
+
 public class MainAdd extends AppCompatActivity {
     private TextView view;
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -30,6 +35,11 @@ public class MainAdd extends AppCompatActivity {
         showNames();
 
     }
+
+    /**
+     * metoden for å gi navn til det nye bildet
+     *
+     */
 
     public void addNew(View v){
         EditText txt = findViewById(R.id.editText);
@@ -52,6 +62,11 @@ public class MainAdd extends AppCompatActivity {
     private void append(String s){
         view.append(s + "\n");
     }
+
+    /**
+     * henter ut navnet og gjemmer random string fra navnet hvis de har en.
+     */
+
     private void showNames(){
         Map names = pref.getAll();
         Object[] s = names.values().toArray();
@@ -64,12 +79,22 @@ public class MainAdd extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * Metoden for knappen som starter kameraet for å ta et bilde
+     */
+
     public void startPicture(View v){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
+    /**
+     * Metode som henter det nye bildet
+     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
