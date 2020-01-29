@@ -3,6 +3,8 @@ package com.example.oblig1;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.os.Environment;
 import android.util.Log;
 
@@ -70,4 +72,9 @@ public class ImageHandler {
         return imgFile.delete();
     }
 
+    public static Bitmap scaledImage(Bitmap image) {
+        Matrix m = new Matrix();
+        m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);
+        return Bitmap.createBitmap(image, 0, 0,  image.getWidth(),  image.getHeight(), m, true);
+    }
 }
