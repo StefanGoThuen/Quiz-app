@@ -16,7 +16,6 @@ import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.recyclerview.QuizRecyclerViewAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -41,11 +40,12 @@ public class MainQuiz extends AppCompatActivity {
         answerQuiz = findViewById(R.id.quizButton);
         userAnswer = findViewById(R.id.quizEditText);
         DatabaseHandler.getQuizItems(this, databaseItems);
-        shuffleAndlimitQuizItems();
+        shuffleAndLimitQuizItems();
         setQuestionNumberTextView();
         quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
     }
     private void nextImage() {
+        questionNumber++;
         if (questionNumber == databaseItems.size()) {
             endQuiz();
         } else {
@@ -82,13 +82,13 @@ public class MainQuiz extends AppCompatActivity {
     }
 
     private void setQuestionNumberTextView(){
-        String qN = String.valueOf(questionNumber+=1);
+        String qN = String.valueOf(questionNumber+1);
         questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(databaseItems.size())));
     }
 
     //Adds databaseItems to array
 
-    private void shuffleAndlimitQuizItems(){
+    private void shuffleAndLimitQuizItems(){
         Collections.shuffle(databaseItems);
         if(databaseItems.size()>10){
             for(int i = 0; i<10; i++){
