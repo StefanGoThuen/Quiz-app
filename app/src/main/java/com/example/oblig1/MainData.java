@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -88,7 +89,9 @@ public class MainData extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml.
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mymenu, menu);
+        return true;
     }
 
     // handle button activities
@@ -98,8 +101,11 @@ public class MainData extends AppCompatActivity {
 
         if (id == R.id.mybutton) {
             startActivity(new Intent(this, MainAdd.class));
+            return true;
         }
-        return super.onOptionsItemSelected(item);
+        else{
+            return super.onOptionsItemSelected(item);
+        }
     }
 
 }
