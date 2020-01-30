@@ -47,7 +47,8 @@
                 android:layout_margin="16dp"
                 android:layout_weight="1.5"
                 android:onClick="answerQuiz"
-                android:text="@string/answer" />
+                android:text="@string/answer"
+                android:background="@color/btn"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
