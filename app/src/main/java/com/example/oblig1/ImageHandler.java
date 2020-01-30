@@ -92,7 +92,12 @@ public class ImageHandler {
 
     public static Bitmap scaledImage(Bitmap image) {
         Matrix m = new Matrix();
-        m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);
-        return Bitmap.createBitmap(image, 0, 0,  image.getWidth(),  image.getHeight(), m, true);
+        if(image != null){
+            m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);
+            return Bitmap.createBitmap(image, 0, 0,  image.getWidth(),  image.getHeight(), m, true);
+        }else{
+            return null;
+        }
+
     }
 }
