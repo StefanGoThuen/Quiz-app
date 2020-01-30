@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
-        />
+        android:background="@color/background"/>
 
     <Button
         android:id="@+id/rmBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:onClick="rmAll"
-        android:layout_weight="0.8"
-        android:text="@string/fjern_alle" />
+        android:text="@string/fjern_alle"
+        android:background="@color/btn"/>
 
 </LinearLayout>

@@ -5,29 +5,33 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    tools:context=".MainActivity"
+    android:background="@color/background">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onclickData"
-        android:text="DATABASE" />
-
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:onClick="onclickQuiz"
-        android:text="QUIZ" />
+        android:text="@string/quizBtn"
+        android:background="@color/btn"/>
+
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:onClick="onclickData"
+        android:text="@string/listBtn"
+        android:background="@color/btn"
+        android:layout_marginTop="50dp"/>
+
+
+
+    <Button
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:onClick="onclickAdd"
-        android:text="ADD" />
+        android:text="@string/addBtn"
+        android:background="@color/btn"
+        android:layout_marginTop="50dp"/>
 
 </LinearLayout>

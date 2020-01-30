@@ -7,6 +7,10 @@
     <string name="score">Score: %1$s / %2$s</string>
     <string name="fjern_alle">Fjern alle</string>
     <string name="navn">Navn</string>
+    <string name="quizBtn">QUIZ</string>
+    <string name="listBtn">LIST</string>
+    <string name="addBtn">ADD</string>
+
 
     <string-array name="navn">
         <item>Ole</item>
