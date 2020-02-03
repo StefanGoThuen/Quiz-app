@@ -13,6 +13,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * Author: Petter Knudsen
+ */
 @RunWith(AndroidJUnit4::class)
 class QuizTest {
 

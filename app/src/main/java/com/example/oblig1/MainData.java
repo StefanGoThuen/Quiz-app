@@ -2,8 +2,6 @@ package com.example.oblig1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -21,10 +19,7 @@ import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.recyclerview.DatabaseRecyclerViewAdapter;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Activity til Databasen
@@ -34,7 +29,7 @@ public class MainData extends AppCompatActivity {
     ImageView dataImage;
     TextView textImage;
     private SharedPreferences pref;
-    private ArrayList<DatabaseItem> dataItems = new ArrayList<>();
+    ArrayList<DatabaseItem> dataItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

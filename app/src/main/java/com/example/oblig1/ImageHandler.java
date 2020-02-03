@@ -43,7 +43,7 @@ public class ImageHandler {
      * metode som lagrer de nye bildene som blir lagt til fra ADD i minne
      */
 
-    static void saveBitmapToFile(Context context, String imageName, Bitmap bitmap) {
+    public static void saveBitmapToFile(Context context, String imageName, Bitmap bitmap) {
         // Image should be stored locally
         String storagePath = Environment.DIRECTORY_PICTURES;
         File storageDir = context.getExternalFilesDir(storagePath);
