@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.oblig1.recyclerview.DatabaseItem;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
@@ -57,13 +59,15 @@ public class MainAdd extends AppCompatActivity {
                 return;
             }
             append(nametoAdd);
-            nametoAdd = ImageHandler.randomString() + nametoAdd;
+            String prefName = ImageHandler.randomString() + nametoAdd;
             txt.setText("");
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString(nametoAdd, nametoAdd);
+            editor.putString(prefName, prefName);
             editor.apply();
-            ImageHandler.saveBitmapToFile(this, nametoAdd, imageBitmap);
+            ImageHandler.saveBitmapToFile(this, prefName, imageBitmap);
             imageView.setImageBitmap(null);
+            DatabaseItem newItem = new DatabaseItem(nametoAdd, imageBitmap, prefName);
+            MainActivity.databaseItems.add(newItem);
         } else if(v.getId()==R.id.galleryButton){
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");

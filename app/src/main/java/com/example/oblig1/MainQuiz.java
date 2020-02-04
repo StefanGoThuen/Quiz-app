@@ -1,6 +1,7 @@
 package com.example.oblig1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,23 +31,33 @@ public class MainQuiz extends AppCompatActivity {
     ImageView quizImage;
     Button answerQuiz;
     EditText userAnswer;
-    ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
-    ArrayList<DatabaseItem> quizItems = new ArrayList<>();
     TextView questionNumberTextView;
+    ArrayList<DatabaseItem> quizItems = new ArrayList<>();
     HashMap<DatabaseItem, String> result = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        questionNumberTextView = findViewById(R.id.questionNumberTextView);
         quizImage = findViewById(R.id.quizImage);
         answerQuiz = findViewById(R.id.quizButton);
         userAnswer = findViewById(R.id.quizEditText);
-        DatabaseHandler.getQuizItems(this, databaseItems);
+        questionNumberTextView = findViewById(R.id.questionNumberTextView);
+
         shuffleAndLimitQuizItems();
         setQuestionNumberTextView();
-        quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
+        quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI(View.GONE);
+        while(!MainActivity.databaseDownloaded){
+            Log.i("gg", ":)");
+        }
+        updateUI(View.VISIBLE);
     }
 
     /**
@@ -55,24 +66,28 @@ public class MainQuiz extends AppCompatActivity {
 
     private void nextImage() {
         questionNumber++;
-        if (questionNumber == databaseItems.size()) {
+        if (questionNumber == MainActivity.databaseItems.size()) {
             endQuiz();
         } else {
-            quizImage.setImageBitmap(databaseItems.get(questionNumber).getImage());
+            quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
         }
     }
 
     private void endQuiz() {
-        userAnswer.setVisibility(View.GONE);
-        quizImage.setVisibility(View.GONE);
-        answerQuiz.setVisibility(View.GONE);
-        QuizRecyclerViewAdapter adapter = new QuizRecyclerViewAdapter(databaseItems, result);
+        updateUI(View.GONE);
+        QuizRecyclerViewAdapter adapter = new QuizRecyclerViewAdapter(MainActivity.databaseItems, result);
         RecyclerView recyclerView = findViewById(R.id.quizRecyclerView);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         //recyclerView.setAdapter();
-        questionNumberTextView.setText(getString(R.string.score, String.valueOf(score), String.valueOf(databaseItems.size())));
+        questionNumberTextView.setText(getString(R.string.score, String.valueOf(score), String.valueOf(MainActivity.databaseItems.size())));
+    }
+
+    private void updateUI(int visibility) {
+        userAnswer.setVisibility(visibility);
+        quizImage.setVisibility(visibility);
+        answerQuiz.setVisibility(visibility);
     }
 
     public void answerQuiz(View view) {
@@ -81,10 +96,10 @@ public class MainQuiz extends AppCompatActivity {
             Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(answer.toUpperCase().equals(databaseItems.get(questionNumber).getName().toUpperCase())){
+        if(answer.toUpperCase().equals(MainActivity.databaseItems.get(questionNumber).getName().toUpperCase())){
             score++;
         }
-        result.put(databaseItems.get(questionNumber), answer);
+        result.put(MainActivity.databaseItems.get(questionNumber), answer);
         userAnswer.setText("");
         setQuestionNumberTextView();
         nextImage();
@@ -92,19 +107,19 @@ public class MainQuiz extends AppCompatActivity {
 
     private void setQuestionNumberTextView(){
         String qN = String.valueOf(questionNumber+1);
-        questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(databaseItems.size())));
+        questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(MainActivity.databaseItems.size())));
     }
 
     //Adds databaseItems to array
 
     private void shuffleAndLimitQuizItems(){
-        Collections.shuffle(databaseItems);
-        if(databaseItems.size()>10){
+        Collections.shuffle(MainActivity.databaseItems);
+        if(MainActivity.databaseItems.size()>10){
             for(int i = 0; i<10; i++){
-                quizItems.add(databaseItems.get(i));
+                quizItems.add(MainActivity.databaseItems.get(i));
             }
         } else{
-            quizItems.addAll(databaseItems);
+            quizItems.addAll(MainActivity.databaseItems);
         }
     }
 

@@ -78,11 +78,11 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
                 if (ImageHandler.removeImageFromStorage(context, item.getFileName())) {
                     editor.remove(item.getFileName());
                     editor.apply();
-                    Toast.makeText(context, "The picture was deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "The item was deleted", Toast.LENGTH_SHORT).show();
                     items.remove(item);
                     notifyItemRemoved(position);
                 } else {
-                    Toast.makeText(context, "Failed to delete the picture", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Default items cannot be deleted", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +30,7 @@ public class MainData extends AppCompatActivity {
     ImageView dataImage;
     TextView textImage;
     private SharedPreferences pref;
-    ArrayList<DatabaseItem> dataItems = new ArrayList<>();
+    DatabaseRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +38,27 @@ public class MainData extends AppCompatActivity {
         setContentView(R.layout.activity_data);
         dataImage = findViewById(R.id.dataImage);
         textImage = findViewById(R.id.dataText);
-        DatabaseHandler.getQuizItems(this , dataItems);
         initializeRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        while(!MainActivity.databaseDownloaded){
+            Log.i("oof", "working on it");
+        }
+        findViewById(R.id.progress_circular).setVisibility(View.GONE);
+        findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
+        findViewById(R.id.dataLayout).setVisibility(View.VISIBLE);
     }
 
     /**
      * Henter ferdig definerte views fra DatabaseRecyclerViewAdapter
       */
 
+
     private void initializeRecyclerView() {
-        DatabaseRecyclerViewAdapter adapter = new DatabaseRecyclerViewAdapter(dataItems, this);
+        adapter = new DatabaseRecyclerViewAdapter(MainActivity.databaseItems, this);
         RecyclerView recyclerView = findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -62,11 +74,9 @@ public class MainData extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("names", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
         rmPictures();
-        Intent intent = new Intent(this, MainData.class);
-        startActivity(intent);
-
+        adapter.notifyDataSetChanged();
     }
 
     /**

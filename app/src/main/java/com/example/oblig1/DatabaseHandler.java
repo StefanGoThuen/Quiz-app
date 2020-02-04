@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
@@ -19,7 +20,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 class DatabaseHandler {
-
 
     static void getQuizItems(Context context, ArrayList<DatabaseItem> quizItems){
         SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
