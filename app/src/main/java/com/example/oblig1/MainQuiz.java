@@ -46,7 +46,6 @@ public class MainQuiz extends AppCompatActivity {
 
         shuffleAndLimitQuizItems();
         setQuestionNumberTextView();
-        quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
     }
 
 
@@ -54,12 +53,20 @@ public class MainQuiz extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateUI(View.GONE);
-        while(!MainActivity.databaseDownloaded){
+        while (!MainActivity.databaseDownloaded) {
             Log.i("gg", ":)");
         }
-        findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
-        findViewById(R.id.progress_circular).setVisibility(View.GONE);
-        updateUI(View.VISIBLE);
+        if (MainActivity.databaseItems.size() == 0) {
+            Toast.makeText(this, "Database is empty, add items to start a quiz! (DUH)", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+
+            findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
+            findViewById(R.id.progress_circular).setVisibility(View.GONE);
+            updateUI(View.VISIBLE);
+            quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
+        }
+
     }
 
     /**
@@ -98,7 +105,7 @@ public class MainQuiz extends AppCompatActivity {
             Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(answer.toUpperCase().equals(MainActivity.databaseItems.get(questionNumber).getName().toUpperCase())){
+        if (answer.toUpperCase().equals(MainActivity.databaseItems.get(questionNumber).getName().toUpperCase())) {
             score++;
         }
         result.put(MainActivity.databaseItems.get(questionNumber), answer);
@@ -107,20 +114,20 @@ public class MainQuiz extends AppCompatActivity {
         nextImage();
     }
 
-    private void setQuestionNumberTextView(){
-        String qN = String.valueOf(questionNumber+1);
+    private void setQuestionNumberTextView() {
+        String qN = String.valueOf(questionNumber + 1);
         questionNumberTextView.setText(getString(R.string.quizQuestion, qN, String.valueOf(MainActivity.databaseItems.size())));
     }
 
     //Adds databaseItems to array
 
-    private void shuffleAndLimitQuizItems(){
+    private void shuffleAndLimitQuizItems() {
         Collections.shuffle(MainActivity.databaseItems);
-        if(MainActivity.databaseItems.size()>10){
-            for(int i = 0; i<10; i++){
+        if (MainActivity.databaseItems.size() > 10) {
+            for (int i = 0; i < 10; i++) {
                 quizItems.add(MainActivity.databaseItems.get(i));
             }
-        } else{
+        } else {
             quizItems.addAll(MainActivity.databaseItems);
         }
     }
