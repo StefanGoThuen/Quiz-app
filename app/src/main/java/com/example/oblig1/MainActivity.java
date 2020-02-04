@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onEmptyInput() {
                     Toast.makeText(getApplicationContext(), "Owner must be applied!", Toast.LENGTH_SHORT).show();
                 }
-            })).show();
+            }, owner)).show();
         }
     }
 
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         LoadDatabaseAsync(Context context, ArrayList<DatabaseItem> items) {
             this.context = context;
             this.items = items;
+            items.clear();
         }
 
         @Override
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        String owner = pref.getString(OWNER, "");
         if (id == R.id.changeOwnerButton) {
             (new OwnerDialog(this, new OnSingleInput() {
                 @Override
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onEmptyInput() {
                     Toast.makeText(getApplicationContext(), "Owner must be applied!", Toast.LENGTH_SHORT).show();
                 }
-            })).show();
+            }, owner)).show();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

@@ -57,6 +57,8 @@ public class MainQuiz extends AppCompatActivity {
         while(!MainActivity.databaseDownloaded){
             Log.i("gg", ":)");
         }
+        findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
+        findViewById(R.id.progress_circular).setVisibility(View.GONE);
         updateUI(View.VISIBLE);
     }
 

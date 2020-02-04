@@ -15,10 +15,11 @@ import com.example.oblig1.R;
 public class OwnerDialog extends Dialog {
 
     private OnSingleInput listener;
-
-    public OwnerDialog(@NonNull Context context, OnSingleInput listener) {
+    private String name;
+    public OwnerDialog(@NonNull Context context, OnSingleInput listener, String name) {
         super(context);
         this.listener = listener;
+        this.name = name;
     }
 
     @Override
@@ -27,6 +28,7 @@ public class OwnerDialog extends Dialog {
         setContentView(R.layout.dialog_owner);
 
         final EditText editText = findViewById(R.id.ownerDialogEditText);
+        editText.setText(name);
         Button button = findViewById(R.id.ownerDialogButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

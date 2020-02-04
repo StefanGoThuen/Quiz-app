@@ -21,6 +21,7 @@ import java.util.Random;
 
 public class ImageHandler {
     private static final String JPG = ".jpg";
+    public static boolean justForTestDontDoThisInRealLifeThanks = false;
 
     /**
      * Metode som henter filnavnene fra de lagrete bildene fra minne
@@ -55,15 +56,17 @@ public class ImageHandler {
             }
         }
         File image = new File(
-                storageDir + "/" + imageName +JPG
+                storageDir + "/" + imageName + JPG
         );
         try {
             FileOutputStream out = new FileOutputStream(image);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out); // bmp is your Bitmap instance
+            justForTestDontDoThisInRealLifeThanks = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * randomString klasse som legger til en random string til navnet på bilde
      * i tilfelle det blir lagret flere bilder med samme navn
@@ -76,26 +79,26 @@ public class ImageHandler {
             tempChar = (char) (generator.nextInt('z' - 'a') + 'a');
             randomStringBuilder.append(tempChar);
         }
-        return randomStringBuilder.toString()+"_";
+        return randomStringBuilder.toString() + "_";
     }
 
     /**
      * Sletter bilde helt fra minnet
      */
 
-    public static boolean removeImageFromStorage(Context context, String name){
+    public static boolean removeImageFromStorage(Context context, String name) {
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        Log.i("imageremovestuff", "removeImageFromStorage: "+name);
+        Log.i("imageremovestuff", "removeImageFromStorage: " + name);
         File imgFile = new File(storageDir + "/" + name + JPG + "/");
         return imgFile.delete();
     }
 
     public static Bitmap scaledImage(Bitmap image) {
         Matrix m = new Matrix();
-        if(image != null){
+        if (image != null) {
             m.setRectToRect(new RectF(0, 0, image.getWidth(), image.getHeight()), new RectF(0, 0, 700, 700), Matrix.ScaleToFit.CENTER);
-            return Bitmap.createBitmap(image, 0, 0,  image.getWidth(),  image.getHeight(), m, true);
-        }else{
+            return Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
+        } else {
             return null;
         }
 
