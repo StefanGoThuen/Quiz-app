@@ -60,7 +60,7 @@ public class MainQuiz extends AppCompatActivity {
             Toast.makeText(this, "Database is empty, add items to start a quiz! (DUH)", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-
+            userAnswer.requestFocus();
             findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
             findViewById(R.id.progress_circular).setVisibility(View.GONE);
             updateUI(View.VISIBLE);
@@ -80,6 +80,8 @@ public class MainQuiz extends AppCompatActivity {
         } else {
             quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
         }
+        userAnswer.requestFocus();
+
     }
 
     private void endQuiz() {

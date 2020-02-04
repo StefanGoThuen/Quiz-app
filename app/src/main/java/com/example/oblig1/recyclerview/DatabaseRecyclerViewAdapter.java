@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oblig1.ImageHandler;
 import com.example.oblig1.R;
+import com.example.oblig1.room.QuizItem;
 
 import java.util.ArrayList;
 

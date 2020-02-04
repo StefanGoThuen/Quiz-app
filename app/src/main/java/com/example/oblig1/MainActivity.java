@@ -1,9 +1,7 @@
 package com.example.oblig1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private static final String OWNER = "OWNER";
-    public static final ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
+    public static ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
     public static boolean databaseDownloaded = false;
 
     @Override
@@ -35,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         pref = getSharedPreferences(OWNER, MODE_PRIVATE);
         String owner = pref.getString(OWNER, "");
-        if (databaseItems.size() == 0) {
-            LoadDatabaseAsync loadAsync = new LoadDatabaseAsync(getApplicationContext(), databaseItems);
-            loadAsync.execute();
-        }
         if (owner.equals("")) {
             (new OwnerDialog(this, new OnSingleInput() {
                 @Override
@@ -85,28 +79,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public class LoadDatabaseAsync extends AsyncTask {
-
-        private Context context;
-        private ArrayList<DatabaseItem> items;
-
-        LoadDatabaseAsync(Context context, ArrayList<DatabaseItem> items) {
-            this.context = context;
-            this.items = items;
-            items.clear();
-        }
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            DatabaseHandler.getQuizItems(context, items);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-                databaseDownloaded = true;
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

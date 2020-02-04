@@ -1,10 +1,12 @@
 package com.example.oblig1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -14,8 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
+import com.example.oblig1.room.AppDatabase;
+import com.example.oblig1.room.QuizItem;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -47,7 +52,6 @@ public class MainAdd extends AppCompatActivity {
 
     /**
      * metoden for å gi navn til det nye bildet
-     *
      */
 
     public void addNew(View v) {
@@ -59,6 +63,7 @@ public class MainAdd extends AppCompatActivity {
                 return;
             }
             append(nametoAdd);
+            nametoAdd = nametoAdd.replaceAll(" ", "-");
             String prefName = ImageHandler.randomString() + nametoAdd;
             txt.setText("");
             SharedPreferences.Editor editor = pref.edit();
@@ -66,9 +71,12 @@ public class MainAdd extends AppCompatActivity {
             editor.apply();
             ImageHandler.saveBitmapToFile(this, prefName, imageBitmap);
             imageView.setImageBitmap(null);
-            DatabaseItem newItem = new DatabaseItem(nametoAdd, imageBitmap, prefName);
-            MainActivity.databaseItems.add(newItem);
-        } else if(v.getId()==R.id.galleryButton){
+            DatabaseItem dbItem = new DatabaseItem(nametoAdd.replaceAll("-", " "), imageBitmap, prefName);
+            MainActivity.databaseItems.add(dbItem);
+            QuizItem newItem = new QuizItem(0, nametoAdd, prefName);
+            AgentAsyncTask asyncTask = new AgentAsyncTask(getApplicationContext(), newItem);
+            asyncTask.execute();
+        } else if (v.getId() == R.id.galleryButton) {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
@@ -84,7 +92,7 @@ public class MainAdd extends AppCompatActivity {
      * henter ut navnet og gjemmer random string fra navnet hvis de har en.
      */
 
-    private void showNames(){
+    private void showNames() {
         Map names = pref.getAll();
         Object[] s = names.values().toArray();
         for (Object o : s) {
@@ -102,7 +110,7 @@ public class MainAdd extends AppCompatActivity {
      * Metoden for knappen som starter kameraet for å ta et bilde
      */
 
-    public void startPicture(View v){
+    public void startPicture(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -134,5 +142,27 @@ public class MainAdd extends AppCompatActivity {
             }
 
         }
+    }
+
+    private static class AgentAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        //Prevent leak
+        private Context context;
+        QuizItem item;
+
+        public AgentAsyncTask(Context context, QuizItem item) {
+            this.context = context;
+            this.item = item;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            AppDatabase db = Room.databaseBuilder(context,
+                    AppDatabase.class, "quiz").build();
+            db.quizDao().insertSingular(item);
+
+            return null;
+        }
+
     }
 }

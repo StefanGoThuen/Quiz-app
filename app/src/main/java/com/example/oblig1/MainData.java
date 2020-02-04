@@ -44,9 +44,6 @@ public class MainData extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        while(!MainActivity.databaseDownloaded){
-            Log.i("oof", "working on it");
-        }
         findViewById(R.id.progress_circular).setVisibility(View.GONE);
         findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
         findViewById(R.id.dataLayout).setVisibility(View.VISIBLE);
