@@ -104,9 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
-            if (items.size() > 0) {
                 databaseDownloaded = true;
-            }
         }
     }
 

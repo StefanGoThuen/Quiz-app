@@ -76,6 +76,7 @@ public class MainData extends AppCompatActivity {
         editor.clear();
         editor.apply();
         rmPictures();
+        MainActivity.databaseItems.clear();
         adapter.notifyDataSetChanged();
     }
 

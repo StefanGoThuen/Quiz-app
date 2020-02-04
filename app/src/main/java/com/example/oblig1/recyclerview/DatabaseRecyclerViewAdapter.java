@@ -80,7 +80,7 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
                     editor.apply();
                     Toast.makeText(context, "The item was deleted", Toast.LENGTH_SHORT).show();
                     items.remove(item);
-                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
                 } else {
                     Toast.makeText(context, "Default items cannot be deleted", Toast.LENGTH_SHORT).show();
                 }

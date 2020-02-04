@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
@@ -21,24 +20,30 @@ import static android.content.Context.MODE_PRIVATE;
 
 class DatabaseHandler {
 
-    static void getQuizItems(Context context, ArrayList<DatabaseItem> quizItems){
-        SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
+    private static final String DHB = "DHB";
+
+    static void getQuizItems(Context context, ArrayList<DatabaseItem> quizItems) {
+        SharedPreferences pref = context.getSharedPreferences(DHB, MODE_PRIVATE);
+        if(!pref.getBoolean(DHB, false)){
+            handleDefaultImages(context);
+        }
+        pref = context.getSharedPreferences("names", MODE_PRIVATE);
         Map allprefs = pref.getAll();
         Object[] strings = allprefs.values().toArray();
         HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(context, getArrayList(strings));
-        for(Object s: strings){
-            if(s.toString().contains("_")){
+        for (Object s : strings) {
+            if (s.toString().contains("_")) {
                 Log.i("imageremovestuff", "getQuizItems: " + s.toString());
                 quizItems.add(new DatabaseItem(s.toString().split("_")[1], map.get(s.toString().split("_")[1]), s.toString()));
-            }else{
+            } else {
                 quizItems.add(new DatabaseItem(s.toString(), map.get(s.toString()), s.toString()));
             }
         }
-        addDefaultImages(quizItems, context);
     }
-    private static ArrayList<String> getArrayList(Object[] strings){
+
+    private static ArrayList<String> getArrayList(Object[] strings) {
         ArrayList<String> list = new ArrayList<>();
-        for(Object o : strings){
+        for (Object o : strings) {
             list.add(o.toString());
         }
         return list;
@@ -49,7 +54,8 @@ class DatabaseHandler {
      * bildene som allerede er laget
      */
 
-    private static void addDefaultImages(ArrayList<DatabaseItem> quizItems, Context context){
+    private static void handleDefaultImages(Context context) {
+        ArrayList<DatabaseItem> list = new ArrayList<>();
         Bitmap i1 = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ole);
         Bitmap i2 = BitmapFactory.decodeResource(context.getResources(),
@@ -65,13 +71,28 @@ class DatabaseHandler {
         DatabaseItem db3 = new DatabaseItem("petter", i3, "");
         DatabaseItem db4 = new DatabaseItem("simen", i4, "");
         DatabaseItem db5 = new DatabaseItem("stefan", i5, "");
-        quizItems.add(db1);
-        quizItems.add(db2);
-        quizItems.add(db3);
-        quizItems.add(db4);
-        quizItems.add(db5);
+        list.add(db1);
+        list.add(db2);
+        list.add(db3);
+        list.add(db4);
+        list.add(db5);
+        saveImagesToStorage(context, list);
     }
 
+    private static void saveImagesToStorage(Context context, ArrayList<DatabaseItem> list) {
+        SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        for (int i = 0; i < list.size(); i++) {
+            String name = "_"+list.get(i).getName();
+            editor.putString(name, name);
+            ImageHandler.saveBitmapToFile(context, name, list.get(i).getImage());
+            editor.apply();
+        }
+        pref = context.getSharedPreferences(DHB, MODE_PRIVATE);
+        editor = pref.edit();
+        editor.putBoolean(DHB, true);
+        editor.apply();
+    }
 
 
 }
