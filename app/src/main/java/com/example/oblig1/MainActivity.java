@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Startsiden for appen som inneholder kanpper til de forskjellige aktivitetene
@@ -90,8 +94,29 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("owner", owner);
         editor.commit();
+        Toast.makeText(this, owner + " set as owner", Toast.LENGTH_SHORT).show();
     }
     public void btnNewOwner(View v){
         openDialog();
+    }
+
+    //Adding a menu to the toolbar
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.olemenu , menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.preferences:
+                openDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
