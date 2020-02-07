@@ -42,9 +42,9 @@ class DatabaseHandler {
 
     private static boolean newUser(Context context) {
         SharedPreferences pref = context.getSharedPreferences("owner", MODE_PRIVATE);
-        Boolean newUser = pref.getBoolean("new4", true);
+        Boolean newUser = pref.getBoolean("new", true);
         SharedPreferences.Editor edit = pref.edit();
-        edit.putBoolean("new4", false);
+        edit.putBoolean("new", false);
         edit.commit();
         return newUser;
     }
@@ -86,15 +86,14 @@ class DatabaseHandler {
         s = ImageHandler.randomString() + "petter";
         ImageHandler.saveBitmapToFile(context, s, i3);
         editor.putString(s, s);
-        ImageHandler.saveBitmapToFile(context, ImageHandler.randomString() +"simen", i4);
-        ImageHandler.saveBitmapToFile(context, ImageHandler.randomString() +"stefan", i5);
-
-
-        editor.putString("jostein", "jostein");
-        editor.putString("petter", "petter");
-        editor.putString("simen", "simen");
-        editor.putString("stefan", "stefan");
+        s = ImageHandler.randomString() + "simen";
+        ImageHandler.saveBitmapToFile(context, s, i4);
+        editor.putString(s, s);
+        s = ImageHandler.randomString() + "stefan";
+        ImageHandler.saveBitmapToFile(context, s, i5);
+        editor.putString(s, s);
         editor.commit();
+
         DatabaseItem db1 = new DatabaseItem("ole", i1, "");
         DatabaseItem db2 = new DatabaseItem("jostein", i2, "");
         DatabaseItem db3 = new DatabaseItem("petter", i3, "");
