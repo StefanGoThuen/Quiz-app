@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.util.Log;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
@@ -20,7 +21,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 class DatabaseHandler {
 
-
     static void getQuizItems(Context context, ArrayList<DatabaseItem> quizItems){
         SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
         Map allprefs = pref.getAll();
@@ -34,8 +34,21 @@ class DatabaseHandler {
                 quizItems.add(new DatabaseItem(s.toString(), map.get(s.toString()), s.toString()));
             }
         }
-        addDefaultImages(quizItems, context);
+        if(newUser(context)){
+            addDefaultImages(quizItems, context);
+        }
+
     }
+
+    private static boolean newUser(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("owner", MODE_PRIVATE);
+        Boolean newUser = pref.getBoolean("new4", true);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putBoolean("new4", false);
+        edit.commit();
+        return newUser;
+    }
+
     private static ArrayList<String> getArrayList(Object[] strings){
         ArrayList<String> list = new ArrayList<>();
         for(Object o : strings){
@@ -60,6 +73,28 @@ class DatabaseHandler {
                 R.drawable.simen);
         Bitmap i5 = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.stefan);
+
+        SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        String s = ImageHandler.randomString() +"ole";
+        ImageHandler.saveBitmapToFile(context, s, i1);
+        editor.putString(s, s);
+        s = ImageHandler.randomString() + "jostein";
+        ImageHandler.saveBitmapToFile(context, s, i2);
+        editor.putString(s, s);
+        s = ImageHandler.randomString() + "petter";
+        ImageHandler.saveBitmapToFile(context, s, i3);
+        editor.putString(s, s);
+        ImageHandler.saveBitmapToFile(context, ImageHandler.randomString() +"simen", i4);
+        ImageHandler.saveBitmapToFile(context, ImageHandler.randomString() +"stefan", i5);
+
+
+        editor.putString("jostein", "jostein");
+        editor.putString("petter", "petter");
+        editor.putString("simen", "simen");
+        editor.putString("stefan", "stefan");
+        editor.commit();
         DatabaseItem db1 = new DatabaseItem("ole", i1, "");
         DatabaseItem db2 = new DatabaseItem("jostein", i2, "");
         DatabaseItem db3 = new DatabaseItem("petter", i3, "");

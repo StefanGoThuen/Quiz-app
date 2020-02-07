@@ -82,7 +82,9 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
                     items.remove(item);
                     notifyItemRemoved(position);
                 } else {
-                    Toast.makeText(context, "Failed to delete the picture", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "The picture was deleted", Toast.LENGTH_SHORT).show();
+                    items.remove(item);
+                    notifyItemRemoved(position);
                 }
                 return true;
             }
