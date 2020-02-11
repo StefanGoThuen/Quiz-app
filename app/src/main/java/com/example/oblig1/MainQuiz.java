@@ -89,6 +89,18 @@ public class MainQuiz extends AppCompatActivity {
         setQuestionNumberTextView();
         nextImage();
     }
+    public void answerQuiz(String userAnswer) {
+        String answer = userAnswer;
+        if (answer.equals("")) {
+            Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(answer.toUpperCase().equals(databaseItems.get(questionNumber).getName().toUpperCase())){
+            score++;
+        }
+        result.put(databaseItems.get(questionNumber), answer);
+
+    }
 
     private void setQuestionNumberTextView(){
         String qN = String.valueOf(questionNumber+1);
@@ -106,6 +118,27 @@ public class MainQuiz extends AppCompatActivity {
         } else{
             quizItems.addAll(databaseItems);
         }
+    }
+
+    //Disse metodene er kun brukt for testing, og ikke for applikasjonen
+    public void initTesting(){
+        makeTestItems();
+        shuffleAndLimitQuizItems();
+    }
+    public int getScore(){
+        return score;
+    }
+    public int getQuestionNumber(){
+        return questionNumber;
+    }
+    public String getCurrentAnswer(){
+        return databaseItems.get(questionNumber).getName().toUpperCase();
+    }
+    private void makeTestItems(){
+        databaseItems.add(new DatabaseItem("en", null, "en"));
+        databaseItems.add(new DatabaseItem("to", null, "to"));
+        databaseItems.add(new DatabaseItem("tre", null, "tre"));
+        databaseItems.add(new DatabaseItem("fire", null, "fire"));
     }
 
 }
