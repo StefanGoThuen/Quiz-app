@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,18 +63,14 @@ public class MainAdd extends AppCompatActivity {
             if (nametoAdd.equals("") || imageBitmap == null) {
                 return;
             }
+
             append(nametoAdd);
             nametoAdd = nametoAdd.replaceAll(" ", "-");
-            String prefName = ImageHandler.randomString() + nametoAdd;
             txt.setText("");
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString(prefName, prefName);
-            editor.apply();
-            ImageHandler.saveBitmapToFile(this, prefName, imageBitmap);
+            imageBitmap = ImageHandler.scaledImage(imageBitmap);
             imageView.setImageBitmap(null);
-            DatabaseItem dbItem = new DatabaseItem(nametoAdd.replaceAll("-", " "), imageBitmap, prefName);
-            MainActivity.databaseItems.add(dbItem);
-            QuizItem newItem = new QuizItem(0, nametoAdd, prefName);
+            QuizItem newItem = new QuizItem(0, nametoAdd, ImageHandler.bitmapToBytes(imageBitmap));
+            MainActivity.databaseItems.add(newItem);
             AgentAsyncTask asyncTask = new AgentAsyncTask(getApplicationContext(), newItem);
             asyncTask.execute();
         } else if (v.getId() == R.id.galleryButton) {
@@ -150,7 +147,7 @@ public class MainAdd extends AppCompatActivity {
         private Context context;
         QuizItem item;
 
-        public AgentAsyncTask(Context context, QuizItem item) {
+        AgentAsyncTask(Context context, QuizItem item) {
             this.context = context;
             this.item = item;
         }

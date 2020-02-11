@@ -1,30 +1,30 @@
 package com.example.oblig1.recyclerview;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.oblig1.ImageHandler;
+import com.example.oblig1.MainActivity;
 import com.example.oblig1.R;
+import com.example.oblig1.room.AppDatabase;
 import com.example.oblig1.room.QuizItem;
 
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private ArrayList<DatabaseItem> items;
+    private ArrayList<QuizItem> items;
     private Context context;
 
-    public DatabaseRecyclerViewAdapter(ArrayList<DatabaseItem> items, Context context) {
+    public DatabaseRecyclerViewAdapter(ArrayList<QuizItem> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -32,14 +32,9 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
     /**
      * RecycleView sin ViewHolder for å representere de itemsene de henter i DatabaseItem
      *
-     * @param parent
-     * View gruppen der items blir representert / lagt til.
-     *
-     * @param viewType
-     * typen til den nye Viewen
-     *
-     * @return
-     * Retunerer den nye view med itemsene (bilder og navn) i.
+     * @param parent   View gruppen der items blir representert / lagt til.
+     * @param viewType typen til den nye Viewen
+     * @return Retunerer den nye view med itemsene (bilder og navn) i.
      */
 
     @NonNull
@@ -54,37 +49,28 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
      * RecycleView sin ViewHolder for å vise og gi items en posisjon
      * i den nye viewet
      *
-     * @param holder
-     *   ViewHolder som viser dataen/items der i den posisjonen de har blitt tildelt
-     *
-     * @param position
-     *      Posisjonen til dataen/items
-     *
-     *      I tillegg er det en onClicklistener for å slette bilder i databasen
-     *      som ikke er default blider
+     * @param holder   ViewHolder som viser dataen/items der i den posisjonen de har blitt tildelt
+     * @param position Posisjonen til dataen/items
+     *                 <p>
+     *                 I tillegg er det en onClicklistener for å slette bilder i databasen
+     *                 som ikke er default blider
      */
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final DatabaseItem item = items.get(position);
+        final QuizItem item = items.get(position);
         ImageView imageView = holder.itemView.findViewById(R.id.dataImage);
-        imageView.setImageBitmap(item.getImage());
+        imageView.setImageBitmap(ImageHandler.byteToBitmap(item.getImage()));
         TextView textView = holder.itemView.findViewById(R.id.dataText);
         textView.setText(item.getName());
         holder.itemView.findViewById(R.id.dataItemLayout).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                SharedPreferences pref = context.getSharedPreferences("names", MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                if (ImageHandler.removeImageFromStorage(context, item.getFileName())) {
-                    editor.remove(item.getFileName());
-                    editor.apply();
-                    Toast.makeText(context, "The item was deleted", Toast.LENGTH_SHORT).show();
-                    items.remove(item);
-                    notifyDataSetChanged();
-                } else {
-                    Toast.makeText(context, "Default items cannot be deleted", Toast.LENGTH_SHORT).show();
-                }
+                items.remove(item);
+                MainActivity.databaseItems.remove(item);
+                notifyDataSetChanged();
+                DeleteAsync delete = new DeleteAsync(item);
+                delete.execute();
                 return true;
             }
         });
@@ -99,5 +85,22 @@ public class DatabaseRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    private class DeleteAsync extends AsyncTask<Void, Void, Void> {
+
+        QuizItem item;
+
+        DeleteAsync(QuizItem item) {
+            this.item = item;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            AppDatabase db = Room.databaseBuilder(context,
+                    AppDatabase.class, "quiz").build();
+            db.quizDao().delete(item);
+            return null;
+        }
     }
 }

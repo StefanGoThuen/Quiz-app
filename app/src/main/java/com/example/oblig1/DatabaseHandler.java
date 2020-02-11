@@ -7,12 +7,10 @@ import android.graphics.BitmapFactory;
 
 import androidx.room.Room;
 
-import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.room.AppDatabase;
 import com.example.oblig1.room.QuizItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Klasse som henter bilder og navn allerede lagret i databasen
@@ -22,26 +20,15 @@ class DatabaseHandler {
 
     private static final String DHB = "DHB";
 
-    static ArrayList<DatabaseItem> getQuizItems(Context context) {
+    static ArrayList<QuizItem> getQuizItems(Context context) {
         SharedPreferences pref = context.getSharedPreferences(DHB, Context.MODE_PRIVATE);
         if (!pref.getBoolean(DHB, false)) {
             handleDefaultImages(context);
         }
         AppDatabase db = Room.databaseBuilder(context,
                 AppDatabase.class, "quiz").build();
-        ArrayList<QuizItem> quizItems = (ArrayList<QuizItem>) db.quizDao().getAll();
-        ArrayList<String> names = new ArrayList<>();
-        for(QuizItem item : quizItems){
-            names.add(item.getBitmapPath());
-        }
-        ArrayList<DatabaseItem> dbItems = new ArrayList<>();
-        HashMap<String, Bitmap> map = ImageHandler.retrieveImageWithName(context, names);
-        int count = 0;
-        for(String key : map.keySet()){
-            dbItems.add(new DatabaseItem(key.replaceAll("-", " "), map.get(key), quizItems.get(count).getBitmapPath()));
-            count++;
-        }
-        return dbItems;
+
+        return (ArrayList<QuizItem>) db.quizDao().getAll();
     }
 
 
@@ -62,25 +49,41 @@ class DatabaseHandler {
                 R.drawable.simen);
         Bitmap i5 = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.stefan);
-        QuizItem db1 = new QuizItem(0, "ole", "_ole");
-        QuizItem db2 = new QuizItem(0, "jostein", "_jostein");
-        QuizItem db3 = new QuizItem(0, "petter", "_petter");
-        QuizItem db4 = new QuizItem(0, "simen", "_simen");
-        QuizItem db5 = new QuizItem(0, "stefan", "_stefan");
-        list.add(db1);
-        list.add(db2);
-        list.add(db3);
-        list.add(db4);
-        list.add(db5);
-        ImageHandler.saveBitmapToFile(context, db1.getBitmapPath(), i1);
-        ImageHandler.saveBitmapToFile(context, db2.getBitmapPath(), i2);
-        ImageHandler.saveBitmapToFile(context, db3.getBitmapPath(), i3);
-        ImageHandler.saveBitmapToFile(context, db4.getBitmapPath(), i4);
-        ImageHandler.saveBitmapToFile(context, db5.getBitmapPath(), i5);
-        saveImagesToStorage(context, list);
+        i1 = ImageHandler.scaledImage(i1);
+        i2 = ImageHandler.scaledImage(i2);
+        i3 = ImageHandler.scaledImage(i3);
+        i4 = ImageHandler.scaledImage(i4);
+        i5 = ImageHandler.scaledImage(i5);
+        QuizItem item1 = null;
+        if (i1 != null) {
+            item1 = new QuizItem(0, "ole", ImageHandler.bitmapToBytes(i1));
+        }
+        QuizItem item2 = null;
+        if (i2 != null) {
+            item2 = new QuizItem(0, "jostein", ImageHandler.bitmapToBytes(i2));
+        }
+        QuizItem item3 = null;
+        if (i3 != null) {
+            item3 = new QuizItem(0, "petter", ImageHandler.bitmapToBytes(i3));
+        }
+        QuizItem item4 = null;
+        if (i4 != null) {
+            item4 = new QuizItem(0, "simen", ImageHandler.bitmapToBytes(i4));
+        }
+        QuizItem item5 = null;
+        if (i5 != null) {
+            item5 = new QuizItem(0, "stefan", ImageHandler.bitmapToBytes(i5));
+        }
+        list.add(item1);
+        list.add(item2);
+        list.add(item3);
+        list.add(item4);
+        list.add(item5);
+
+        saveImagesToDatabase(context, list);
     }
 
-    private static void saveImagesToStorage(Context context, ArrayList<QuizItem> list) {
+    private static void saveImagesToDatabase(Context context, ArrayList<QuizItem> list) {
         AppDatabase db = Room.databaseBuilder(context,
                 AppDatabase.class, "quiz").build();
         db.quizDao().insertAll(list);

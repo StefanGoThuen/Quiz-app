@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oblig1.recyclerview.DatabaseItem;
 import com.example.oblig1.recyclerview.QuizRecyclerViewAdapter;
+import com.example.oblig1.room.QuizItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +33,8 @@ public class MainQuiz extends AppCompatActivity {
     Button answerQuiz;
     EditText userAnswer;
     TextView questionNumberTextView;
-    ArrayList<DatabaseItem> quizItems = new ArrayList<>();
-    HashMap<DatabaseItem, String> result = new HashMap<>();
+    ArrayList<QuizItem> quizItems = new ArrayList<>();
+    HashMap<QuizItem, String> result = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class MainQuiz extends AppCompatActivity {
             findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
             findViewById(R.id.progress_circular).setVisibility(View.GONE);
             updateUI(View.VISIBLE);
-            quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
+            quizImage.setImageBitmap(ImageHandler.byteToBitmap(MainActivity.databaseItems.get(questionNumber).getImage()));
         }
 
     }
@@ -78,7 +79,7 @@ public class MainQuiz extends AppCompatActivity {
         if (questionNumber == MainActivity.databaseItems.size()) {
             endQuiz();
         } else {
-            quizImage.setImageBitmap(MainActivity.databaseItems.get(questionNumber).getImage());
+            quizImage.setImageBitmap(ImageHandler.byteToBitmap(MainActivity.databaseItems.get(questionNumber).getImage()));
         }
         userAnswer.requestFocus();
 

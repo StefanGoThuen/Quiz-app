@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oblig1.dialogs.OnSingleInput;
 import com.example.oblig1.dialogs.OwnerDialog;
-import com.example.oblig1.recyclerview.DatabaseItem;
+import com.example.oblig1.room.QuizItem;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private static final String OWNER = "OWNER";
-    public static ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
+    public static ArrayList<QuizItem> databaseItems = new ArrayList<>();
     public static boolean databaseDownloaded = false;
 
     @Override
@@ -64,19 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public void onclickAdd(View view) {
         Intent intent = new Intent(this, MainAdd.class);
         startActivity(intent);
-    }
-
-    /**
-     * fremtidig prosjekt. IKKE i bruk ennå
-     */
-    public void addNames() {
-        SharedPreferences.Editor editor = pref.edit();
-        String[] names = getResources().getStringArray(R.array.navn);
-
-        for (String s : names) {
-            editor.putString(s, s);
-        }
-        editor.apply();
     }
 
 

@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oblig1.recyclerview.DatabaseItem
+import com.example.oblig1.room.QuizItem
 import java.util.*
 
 class SplashActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
         val loadAsync = LoadDatabaseAsync(applicationContext, MainActivity.databaseItems)
         loadAsync.execute()
     }
-    class LoadDatabaseAsync(private val context: Context, items: ArrayList<DatabaseItem?>) : AsyncTask<Any?, Any?, Any?>() {
+    class LoadDatabaseAsync(private val context: Context, items: ArrayList<QuizItem?>) : AsyncTask<Any?, Any?, Any?>() {
         override fun doInBackground(objects: Array<Any?>): Any? {
             MainActivity.databaseItems = DatabaseHandler.getQuizItems(context)
             return MainActivity.databaseItems

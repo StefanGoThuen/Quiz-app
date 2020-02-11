@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oblig1.ImageHandler;
+import com.example.oblig1.MainActivity;
 import com.example.oblig1.R;
 import com.example.oblig1.room.QuizItem;
 
@@ -22,10 +24,10 @@ import java.util.HashMap;
 
 public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private ArrayList<DatabaseItem> items;
-    private HashMap<DatabaseItem, String> userAnswers;
+    private ArrayList<QuizItem> items;
+    private HashMap<QuizItem, String> userAnswers;
 
-    public QuizRecyclerViewAdapter(ArrayList<DatabaseItem> items, HashMap<DatabaseItem, String> userAnswers) {
+    public QuizRecyclerViewAdapter(ArrayList<QuizItem> items, HashMap<QuizItem, String> userAnswers) {
         this.items = items;
         this.userAnswers = userAnswers;
     }
@@ -65,7 +67,7 @@ public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DatabaseItem item = items.get(position);
+        QuizItem item = items.get(position);
         TextView userAnswerTextView = holder.itemView.findViewById(R.id.userAnswerTextView);
         TextView correctAnswerTextView = holder.itemView.findViewById(R.id.correctAnswerTextView);
         ImageView image = holder.itemView.findViewById(R.id.imageView);
@@ -81,7 +83,7 @@ public class QuizRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
             userAnswerTextView.setText(userAnswer);
         }
 
-        image.setImageBitmap(item.getImage());
+        image.setImageBitmap(ImageHandler.byteToBitmap(item.getImage()));
     }
 
     @Override
