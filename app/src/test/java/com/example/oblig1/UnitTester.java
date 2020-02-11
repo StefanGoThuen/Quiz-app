@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class scoreTest {
+public class UnitTester {
     @Test
     public void scoreUpdateisCorrect() {
         MainQuiz quiz = new MainQuiz();
@@ -19,6 +19,9 @@ public class scoreTest {
         String wrongAnswer = "eple";
         quiz.answerQuiz(wrongAnswer);
         assertEquals(1, quiz.getScore());
+    }
+    public void nrPicturesUpdate(){
 
     }
+
 }

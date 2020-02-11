@@ -89,18 +89,7 @@ public class MainQuiz extends AppCompatActivity {
         setQuestionNumberTextView();
         nextImage();
     }
-    public void answerQuiz(String userAnswer) {
-        String answer = userAnswer;
-        if (answer.equals("")) {
-            Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(answer.toUpperCase().equals(databaseItems.get(questionNumber).getName().toUpperCase())){
-            score++;
-        }
-        result.put(databaseItems.get(questionNumber), answer);
 
-    }
 
     private void setQuestionNumberTextView(){
         String qN = String.valueOf(questionNumber+1);
@@ -121,6 +110,18 @@ public class MainQuiz extends AppCompatActivity {
     }
 
     //Disse metodene er kun brukt for testing, og ikke for applikasjonen
+    public void answerQuiz(String userAnswer) {
+        String answer = userAnswer;
+        if (answer.equals("")) {
+            Toast.makeText(this, "Answer Cannot be Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(answer.toUpperCase().equals(databaseItems.get(questionNumber).getName().toUpperCase())){
+            score++;
+        }
+        result.put(databaseItems.get(questionNumber), answer);
+
+    }
     public void initTesting(){
         makeTestItems();
         shuffleAndLimitQuizItems();
