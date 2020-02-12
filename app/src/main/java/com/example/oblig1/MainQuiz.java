@@ -53,9 +53,6 @@ public class MainQuiz extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateUI(View.GONE);
-        while (!MainActivity.databaseDownloaded) {
-            Log.i("gg", ":)");
-        }
         if (MainActivity.databaseItems.size() == 0) {
             Toast.makeText(this, "Database is empty, add items to start a quiz! (DUH)", Toast.LENGTH_SHORT).show();
             finish();
