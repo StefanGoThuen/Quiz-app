@@ -35,6 +35,7 @@ public class MainData extends AppCompatActivity {
     TextView textImage;
     private SharedPreferences pref;
     private ArrayList<DatabaseItem> dataItems = new ArrayList<>();
+    public DatabaseRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class MainData extends AppCompatActivity {
       */
 
     private void initializeRecyclerView() {
-        DatabaseRecyclerViewAdapter adapter = new DatabaseRecyclerViewAdapter(dataItems, this);
+        adapter = new DatabaseRecyclerViewAdapter(dataItems, this);
         RecyclerView recyclerView = findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
