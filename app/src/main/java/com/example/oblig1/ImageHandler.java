@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -48,6 +49,8 @@ public class ImageHandler {
         // Image should be stored locally
         String storagePath = Environment.DIRECTORY_PICTURES;
         File storageDir = context.getExternalFilesDir(storagePath);
+        MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, imageName , "test");
+
 
         if (storageDir != null && !storageDir.exists()) {
             File dir = new File(storagePath);

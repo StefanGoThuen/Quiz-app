@@ -23,14 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainQuiz" android:label="Quiz">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".MainData"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainAdd"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".MainQuiz"
             android:parentActivityName=".MainActivity" />
     </application>
 

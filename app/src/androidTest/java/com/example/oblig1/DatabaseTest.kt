@@ -49,7 +49,6 @@ class DatabaseTest {
     fun onBefore() {
         Intents.init()
 
-
         val result = createImageCaptureActivityResultStub()
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(result)
     }

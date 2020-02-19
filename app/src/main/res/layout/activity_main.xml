@@ -6,28 +6,39 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
+<ProgressBar
+    android:id="@+id/mainProgressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"/>
     <TextView
+        android:id="@+id/databaseTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/downloading_database" />
 
     <Button
+        android:id="@+id/databaseButton"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onclickData"
-        android:text="DATABASE" />
+        android:text="@string/database" />
 
     <Button
+        android:id="@+id/quizButton"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onclickQuiz"
-        android:text="QUIZ" />
+        android:text="@string/quiz" />
 
     <Button
+        android:id="@+id/addButton"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onclickAdd"
-        android:text="ADD" />
+        android:text="@string/add" />
 
 </LinearLayout>

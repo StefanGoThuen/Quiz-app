@@ -27,9 +27,8 @@ import org.junit.runner.RunWith
 class QuizTest {
 
     @get:Rule
-    val quizRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
+    val quizRule: ActivityTestRule<MainQuiz> = ActivityTestRule(MainQuiz::class.java)
 
-    private val idlingResource = DownloadAsyncIdlingResource()
 
     @Before
     fun onBefore() {
@@ -38,7 +37,6 @@ class QuizTest {
 
     @After
     fun onAfter() {
-        IdlingRegistry.getInstance().unregister(idlingResource)
         Intents.release()
     }
 
@@ -46,34 +44,12 @@ class QuizTest {
     fun testQuiz() {
 
 
-        IdlingRegistry.getInstance().register(idlingResource)
-
-        try {
-            onView(withText("QUIZ")).perform(click())
-        } catch (e: NoMatchingViewException) {
-            onView(withId(R.id.ownerDialogEditText)).perform(typeText("Petter"), closeSoftKeyboard())
-            onView(withId(R.id.ownerDialogButton)).perform(click())
-        }
-        val quizActivity = getActivityInstance() as MainQuiz
-        for (i in 0 until quizActivity.quizItems.size) {
+        for (i in 0 until quizRule.activity.quizItems.size) {
             onView(withId(R.id.quizEditText)).perform(typeText("petter"), closeSoftKeyboard())
             onView(withId(R.id.quizButton)).perform(click())
         }
-        Truth.assertThat(quizActivity.score).isEqualTo(1)
+        Truth.assertThat(quizRule.activity.score).isEqualTo(1)
     }
 
-    private fun getActivityInstance(): Activity {
-        val currentActivity = ArrayList<Activity>()
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            run {
-                val resumedActivity = ActivityLifecycleMonitorRegistry.getInstance()
-                        .getActivitiesInStage(Stage.RESUMED)
-                val it = resumedActivity.iterator()
-                currentActivity.add(it.next())
-            }
-        }
-
-        return currentActivity[0]
-    }
 }

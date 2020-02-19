@@ -22,6 +22,8 @@ import com.example.oblig1.recyclerview.DatabaseRecyclerViewAdapter;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.oblig1.MainActivity.databaseItems;
+
 /**
  * Activity til Databasen
  */
@@ -34,23 +36,32 @@ public class MainData extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        findViewById(R.id.progress_circular).setVisibility(View.GONE);
+        findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
+        findViewById(R.id.dataLayout).setVisibility(View.VISIBLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
+        if (!MainActivity.databaseDownloaded && !MainActivity.isDownloading) {
+            MainActivity.isDownloading = true;
+            LoadDatabaseToMemory.LoadDatabaseAsync loadAsync = new LoadDatabaseToMemory.LoadDatabaseAsync(getApplicationContext(), databaseItems, new CallbackInterface() {
+                @Override
+                public void databaseDownloaded() {
+                    updateUi();
+                }
+            });
+            loadAsync.execute();
+        } else{
+            updateUi();
+        }
+
+    }
+
+    void updateUi(){
         dataImage = findViewById(R.id.dataImage);
         textImage = findViewById(R.id.dataText);
         initializeRecyclerView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        while(!MainActivity.databaseDownloaded){
-            Log.i("oof", "working on it");
-        }
-        findViewById(R.id.progress_circular).setVisibility(View.GONE);
-        findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
-        findViewById(R.id.dataLayout).setVisibility(View.VISIBLE);
-    }
 
     /**
      * Henter ferdig definerte views fra DatabaseRecyclerViewAdapter

@@ -10,6 +10,10 @@
     <string name="registerOwner">Register Device Owner</string>
     <string name="register_device_owner">Register Device Owner</string>
     <string name="retrieving_quiz_from_database">Retrieving quiz from database</string>
+    <string name="downloading_database">Downloading database!</string>
+    <string name="database">DATABASE</string>
+    <string name="add">ADD</string>
+    <string name="quiz">QUIZ</string>
 
     <string-array name="navn">
         <item>Ole</item>

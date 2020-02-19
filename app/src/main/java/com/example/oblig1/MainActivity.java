@@ -1,14 +1,13 @@
 package com.example.oblig1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,17 +27,24 @@ public class MainActivity extends AppCompatActivity {
     private static final String OWNER = "OWNER";
     public static final ArrayList<DatabaseItem> databaseItems = new ArrayList<>();
     public static boolean databaseDownloaded = false;
+    public static boolean isDownloading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        pref = getSharedPreferences(OWNER, MODE_PRIVATE);
-        String owner = pref.getString(OWNER, "");
         if (databaseItems.size() == 0) {
-            LoadDatabaseAsync loadAsync = new LoadDatabaseAsync(getApplicationContext(), databaseItems);
+            isDownloading = true;
+            LoadDatabaseToMemory.LoadDatabaseAsync loadAsync = new LoadDatabaseToMemory.LoadDatabaseAsync(getApplicationContext(), databaseItems, new CallbackInterface() {
+                @Override
+                public void databaseDownloaded() {
+                    loadUI();
+                }
+            });
             loadAsync.execute();
         }
+        pref = getSharedPreferences(OWNER, MODE_PRIVATE);
+        String owner = pref.getString(OWNER, "");
         if (owner.equals("")) {
             (new OwnerDialog(this, new OnSingleInput() {
                 @Override
@@ -54,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, owner)).show();
         }
+    }
+
+    void loadUI() {
+        findViewById(R.id.mainProgressBar).setVisibility(View.GONE);
+        findViewById(R.id.databaseTextView).setVisibility(View.GONE);
+        findViewById(R.id.databaseButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.addButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.quizButton).setVisibility(View.VISIBLE);
     }
 
 
@@ -85,28 +99,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public class LoadDatabaseAsync extends AsyncTask {
-
-        private Context context;
-        private ArrayList<DatabaseItem> items;
-
-        LoadDatabaseAsync(Context context, ArrayList<DatabaseItem> items) {
-            this.context = context;
-            this.items = items;
-            items.clear();
-        }
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            DatabaseHandler.getQuizItems(context, items);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-                databaseDownloaded = true;
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
