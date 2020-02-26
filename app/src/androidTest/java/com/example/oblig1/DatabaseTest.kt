@@ -82,7 +82,7 @@ class DatabaseTest {
         onView(withText("DATABASE")).perform(click())
         val dataSize = MainActivity.databaseItems.size
         val recyclerView = onView(withId(R.id.dataRecyclerView))
-        recyclerView.perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ViewActions.longClick()))
+        recyclerView.perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, longClick()))
         Truth.assertThat(MainActivity.databaseItems.size).isLessThan(dataSize)
     }
 

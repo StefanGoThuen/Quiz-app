@@ -45,6 +45,7 @@ public class MainQuiz extends AppCompatActivity {
         answerQuiz = findViewById(R.id.quizButton);
         userAnswer = findViewById(R.id.quizEditText);
         questionNumberTextView = findViewById(R.id.questionNumberTextView);
+
         if(!MainActivity.databaseDownloaded && !MainActivity.isDownloading){
             MainActivity.isDownloading = true;
             LoadDatabaseToMemory.LoadDatabaseAsync loadAsync = new LoadDatabaseToMemory.LoadDatabaseAsync(getApplicationContext(), databaseItems, new CallbackInterface() {

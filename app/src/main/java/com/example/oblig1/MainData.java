@@ -36,11 +36,11 @@ public class MainData extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_data);
         findViewById(R.id.progress_circular).setVisibility(View.GONE);
         findViewById(R.id.progressbarTextView).setVisibility(View.GONE);
         findViewById(R.id.dataLayout).setVisibility(View.VISIBLE);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data);
         if (!MainActivity.databaseDownloaded && !MainActivity.isDownloading) {
             MainActivity.isDownloading = true;
             LoadDatabaseToMemory.LoadDatabaseAsync loadAsync = new LoadDatabaseToMemory.LoadDatabaseAsync(getApplicationContext(), databaseItems, new CallbackInterface() {
